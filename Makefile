@@ -1,8 +1,8 @@
 CXX      = g++
 CFLAGS   = -Wall
-CPPFLAGS = $(CFLAGS) -I/usr/local/include -L/usr/local/lib -Iinclude/
 
-LIBRARIES= rabbitmq ssl crypto
+CPPFLAGS = $(CFLAGS) -I/usr/local/include -L/usr/local/lib -Iinclude/  
+LIBRARIES= rabbitmq ssl crypto 
 LIBS     = $(addprefix -l,$(LIBRARIES))
 
 LIBNAME  = amqpcpp
@@ -10,7 +10,7 @@ LIBFILE  = lib$(LIBNAME).a
 LIBSO    = lib$(LIBNAME).so
 
 SOURCES  = src/AMQP.cpp src/AMQPBase.cpp src/AMQPException.cpp src/AMQPMessage.cpp src/AMQPExchange.cpp src/AMQPQueue.cpp
-EXFILES  = example_publish.cpp example_consume.cpp example_get.cpp
+EXFILES  = example_publish.cpp example_get.cpp
 EXAMPLES = $(EXFILES:.cpp=)
 OBJECTS  = $(SOURCES:.cpp=.o)
 
@@ -30,11 +30,13 @@ $(EXAMPLES): $(addprefix examples/,$(EXFILES)) $(LIBFILE)
 
 install:
 	cp $(LIBSO) /usr/local/lib
+	cp $(LIBFILE) /usr/local/lib
 	ldconfig
 	cp include/* /usr/local/include/
 	
 uninstall:
 	rm /usr/local/lib/$(LIBSO)
+	rm /usr/local/lib/$(LIBFILE)
 	rm /usr/local/include/AMQPcpp.h
 	
 clean:
